@@ -14,7 +14,7 @@ This app lets you:
 ---
 
 ## Download
-- Prebuilt `setup_wizard.exe`: [Releases]https://github.com/TreacherousDev/Angry-Birds-Epic-All-Stars-Mastery-Editor/releases/tag/v1.0)
+- Prebuilt `setup_wizard.exe`: [Releases](https://github.com/TreacherousDev/Angry-Birds-Epic-All-Stars-Mastery-Editor/releases/tag/v1.0)
 
 ---
 
