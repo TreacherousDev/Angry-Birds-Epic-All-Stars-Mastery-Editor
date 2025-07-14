@@ -20,7 +20,7 @@ This app lets you:
 
 ## How to Use
 1. Launch the program
-2. Click **"Load Save File"**. Your save file is named `player` without an extension, located at `C:\Users\User\AppData\LocalLow\Drippy Studios\All Stars\prefs`. Make a backup copy just in case anything goes wrong.
+2. Click **"Load File"**. Your save file is named `player` without an extension, located at `C:\Users\User\AppData\LocalLow\Drippy Studios\All Stars\prefs`. Make a backup copy just in case anything goes wrong.
 3. Edit Mastery Levels. Navigate through the tabs: **Red, Chuck, Matilda, Bomb, Blues**. Click the mastery level for any class to change it.
 4. Click **"Save File"** to save your changes
 5. Launch ABE All Stars and you should now have the modified mastery levels
