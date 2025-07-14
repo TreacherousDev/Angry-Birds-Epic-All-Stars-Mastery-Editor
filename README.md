@@ -2,6 +2,7 @@
 <img width="896" height="169" alt="image" src="https://github.com/user-attachments/assets/319726e9-3859-4c68-a101-d02dc4e8dcc9" />
 
 A simple GUI program that allows editing of bird classes' mastery levels in **Angry Birds Epic: All Stars**
+
 ---
 
 ## Preface
@@ -10,10 +11,13 @@ This app lets you:
 * Edit each class's **mastery level** (1 to 100)
 * Save your changes back into the game
 
-## Installation
-Download the latest releases here
+---
+
+## Download
+- Prebuilt `setup_wizard.exe`: [Releases]https://github.com/TreacherousDev/Angry-Birds-Epic-All-Stars-Mastery-Editor/releases/tag/v1.0)
 
 ---
+
 ## How to Use
 1. Launch the program
 2. Click **"Load Save File"**. Your save file is named `player` without an extension, located at `C:\Users\User\AppData\LocalLow\Drippy Studios\All Stars\prefs`. Make a backup copy just in case anything goes wrong.
