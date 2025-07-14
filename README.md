@@ -1,5 +1,6 @@
 # Angry Birds Epic All Stars Mastery Editor
 <img width="896" height="169" alt="image" src="https://github.com/user-attachments/assets/319726e9-3859-4c68-a101-d02dc4e8dcc9" />
+<img width="552" height="401" alt="image" src="https://github.com/user-attachments/assets/896b6179-213d-4665-a549-698ce59ac6df" />
 
 A simple GUI program that allows editing of bird classes' mastery levels in **Angry Birds Epic: All Stars**
 
