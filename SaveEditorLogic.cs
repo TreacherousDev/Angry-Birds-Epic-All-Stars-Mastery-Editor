@@ -21,18 +21,6 @@ namespace AngryBirdsEpicAllStarsSaveEditor
             PlayerDataObject = DeserializeBase64<PlayerData>(PlayerDataBase64);
         }
 
-        public static void SaveToJson(string outputPath)
-        {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };
-
-            string json = JsonSerializer.Serialize(PlayerDataObject, options);
-            File.WriteAllText(outputPath, json);
-        }
-
         public static T DeserializeBase64<T>(string data) where T : class
         {
             using (var stream = new MemoryStream(Convert.FromBase64String(Uri.UnescapeDataString(data))))

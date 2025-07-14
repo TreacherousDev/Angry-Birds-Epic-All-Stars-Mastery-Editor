@@ -25,79 +25,9 @@ namespace AngryBirdsEpicAllStarsSaveEditor
             creditsLabel.ForeColor = Color.Silver;
         }
 
-        private void btnLoadFile_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    SaveEditorLogic.LoadFile(openFileDialog.FileName);
-                    MessageBox.Show("File loaded successfully.");
-                    //SaveEditorLogic.SaveToJson("player.json");
-                    LoadClassesToGrid();
-                }
-            }
-        }
 
-        private void BtnConvertJsonToBase64_Click(object sender, EventArgs e)
-        {
-            using OpenFileDialog openJson = new OpenFileDialog();
-            openJson.Filter = "JSON files (*.json)|*.json";
-            openJson.Title = "Select Modified JSON File";
-
-            if (openJson.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Read and deserialize JSON to PlayerData
-                    string json = File.ReadAllText(openJson.FileName);
-                    var playerData = JsonSerializer.Deserialize<PlayerData>(json);
-
-                    // Convert to Base64
-                    using var ms = new MemoryStream();
-                    Serializer.Serialize(ms, playerData);
-                    string base64 = Convert.ToBase64String(ms.ToArray());
-
-                    // Save as extensionless file
-                    using SaveFileDialog saveDialog = new SaveFileDialog();
-                    saveDialog.Title = "Save Base64 Output";
-                    saveDialog.Filter = "All files (*.*)|*.*";
-                    saveDialog.FileName = "player";
-
-                    if (saveDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        File.WriteAllText(saveDialog.FileName, base64);
-                        MessageBox.Show("Base64 file saved successfully.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}");
-                }
-            }
-        }
-
-        private void LoadClassesToGrid()
-        {
-            
-            if (SaveEditorLogic.PlayerDataObject?.Inventory?.ClassItems != null)
-            {
-                var classItems = SaveEditorLogic.PlayerDataObject.Inventory.ClassItems;
-                if (classItems != null)
-                {
-                    PopulateBirdClassTabs();
-                }
-
-            }
-
-
-
-            //private void btnFixArena_Click(object sender, EventArgs e)
-            //{
-            //    SaveEditorLogic.FixArena();
-            //    MessageBox.Show("Arena fixed.");
-            //}
-        }
+        private int previousLevel = 1; // Dummy XP
+        private object previousValue;  // Dummy Mastery
 
         public static readonly Dictionary<string, string> ClassNameLookup = new()
         {
@@ -160,6 +90,11 @@ namespace AngryBirdsEpicAllStarsSaveEditor
             if (new[] { "class_rogues", "class_skulkers", "class_tricksters", "class_marksmen", "class_treasurehunters", "class_spies", "class_chaos_agent" }.Contains(nameId))
                 return "Blues";
             return "Unknown";
+        }
+        public class ClassDisplayEntry
+        {
+            public string Class { get; set; }
+            public int Mastery { get; set; }
         }
 
         private void PopulateBirdClassTabs()
@@ -227,7 +162,8 @@ namespace AngryBirdsEpicAllStarsSaveEditor
                 DataPropertyName = "Class",
                 HeaderText = "Class",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-                FillWeight = 100
+                FillWeight = 100,
+                ReadOnly = true
             };
 
             var masteryColumn = new DataGridViewTextBoxColumn
@@ -271,8 +207,7 @@ namespace AngryBirdsEpicAllStarsSaveEditor
             }
 
         }
-
-        private object previousValue;
+        
         private void GridViewMastery_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             var grid = sender as DataGridView;
@@ -303,14 +238,39 @@ namespace AngryBirdsEpicAllStarsSaveEditor
             }
         }
 
-
-        public class ClassDisplayEntry
+        private void LoadFile_Click(object sender, EventArgs e)
         {
-                public string Class { get; set; }
-                public int Mastery { get; set; }
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    SaveEditorLogic.LoadFile(openFileDialog.FileName);
+                    MessageBox.Show("File loaded successfully.");
+                    //SaveEditorLogic.SaveToJson("player.json");
+                    LoadPlayerSave();
+                }
+            }
+        }
+        private void LoadPlayerSave()
+        {
+            if (SaveEditorLogic.PlayerDataObject?.Inventory?.ClassItems != null)
+            {
+                var classItems = SaveEditorLogic.PlayerDataObject.Inventory.ClassItems;
+                if (classItems != null)
+                {
+                    PopulateBirdClassTabs();
+                }
+            }
+
+            if (SaveEditorLogic.PlayerDataObject?.Level != null)
+            {
+                int level = SaveEditorLogic.PlayerDataObject.Level;
+                expTextBox.Text = level.ToString();
+                previousLevel = level;
+            }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void SaveFile_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(SaveEditorLogic.loadedPath))
             {
@@ -324,7 +284,23 @@ namespace AngryBirdsEpicAllStarsSaveEditor
             MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
+        private void EXPTextBox_Cell_Validating(object sender, EventArgs e)
+        {
+            if (!int.TryParse(expTextBox.Text.Trim(), out int level) || level < 1 || level > 100)
+            {
+                MessageBox.Show("Level must be an integer between 1 and 100.", "Invalid Level", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                expTextBox.Text = previousLevel.ToString(); // revert to last known good value
+            }
+            else
+            {
+                // Valid: update player data and cache the value
+                if (SaveEditorLogic.PlayerDataObject?.Level != null)
+                {
+                    SaveEditorLogic.PlayerDataObject.Level = level;
+                    previousLevel = level;
+                }
+            }
+        }
     }
 
 }

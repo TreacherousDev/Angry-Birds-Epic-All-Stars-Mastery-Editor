@@ -59,6 +59,8 @@
             dataGridBlues = new Sunny.UI.UIDataGridView();
             metroSetButton2 = new MetroSet_UI.Controls.MetroSetButton();
             creditsLabel = new MetroSet_UI.Controls.MetroSetLabel();
+            uiLabel1 = new Sunny.UI.UILabel();
+            expTextBox = new MetroSet_UI.Controls.MetroSetTextBox();
             uiTabControl1.SuspendLayout();
             tabRed.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridRed).BeginInit();
@@ -131,7 +133,7 @@
             metroSetButton1.Text = "Load File";
             metroSetButton1.ThemeAuthor = "Narwin";
             metroSetButton1.ThemeName = "MetroLite";
-            metroSetButton1.Click += btnLoadFile_Click;
+            metroSetButton1.Click += LoadFile_Click;
             // 
             // uiTabControl1
             // 
@@ -493,13 +495,13 @@
             metroSetButton2.Text = "Save File";
             metroSetButton2.ThemeAuthor = "Narwin";
             metroSetButton2.ThemeName = "MetroLite";
-            metroSetButton2.Click += btnSave_Click;
+            metroSetButton2.Click += SaveFile_Click;
             // 
             // creditsLabel
             // 
             creditsLabel.Font = new Font("Leelawadee UI", 7F, FontStyle.Bold);
             creditsLabel.IsDerivedStyle = true;
-            creditsLabel.Location = new Point(363, 338);
+            creditsLabel.Location = new Point(362, 338);
             creditsLabel.Name = "creditsLabel";
             creditsLabel.Size = new Size(158, 32);
             creditsLabel.Style = MetroSet_UI.Enums.Style.Light;
@@ -510,12 +512,56 @@
             creditsLabel.ThemeAuthor = "Narwin";
             creditsLabel.ThemeName = "MetroLite";
             // 
+            // uiLabel1
+            // 
+            uiLabel1.BackColor = Color.Transparent;
+            uiLabel1.Font = new Font("Segoe UI Black", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            uiLabel1.ForeColor = Color.White;
+            uiLabel1.Location = new Point(226, 340);
+            uiLabel1.Name = "uiLabel1";
+            uiLabel1.Size = new Size(52, 28);
+            uiLabel1.TabIndex = 7;
+            uiLabel1.Text = "XP: ";
+            // 
+            // expTextBox
+            // 
+            expTextBox.AutoCompleteCustomSource = null;
+            expTextBox.AutoCompleteMode = AutoCompleteMode.None;
+            expTextBox.AutoCompleteSource = AutoCompleteSource.None;
+            expTextBox.BorderColor = Color.FromArgb(155, 155, 155);
+            expTextBox.DisabledBackColor = Color.FromArgb(204, 204, 204);
+            expTextBox.DisabledBorderColor = Color.FromArgb(155, 155, 155);
+            expTextBox.DisabledForeColor = Color.FromArgb(136, 136, 136);
+            expTextBox.Font = new Font("Segoe UI Black", 12F, FontStyle.Bold);
+            expTextBox.HoverColor = Color.FromArgb(102, 102, 102);
+            expTextBox.Image = null;
+            expTextBox.IsDerivedStyle = true;
+            expTextBox.Lines = null;
+            expTextBox.Location = new Point(273, 338);
+            expTextBox.MaxLength = 32767;
+            expTextBox.Multiline = false;
+            expTextBox.Name = "expTextBox";
+            expTextBox.ReadOnly = false;
+            expTextBox.Size = new Size(47, 33);
+            expTextBox.Style = MetroSet_UI.Enums.Style.Light;
+            expTextBox.StyleManager = null;
+            expTextBox.TabIndex = 8;
+            expTextBox.Text = "1";
+            expTextBox.TextAlign = HorizontalAlignment.Left;
+            expTextBox.ThemeAuthor = "Narwin";
+            expTextBox.ThemeName = "MetroLite";
+            expTextBox.UseSystemPasswordChar = false;
+            expTextBox.WatermarkText = "";
+            expTextBox.Leave += EXPTextBox_Cell_Validating;
+            // 
             // MainForm
             // 
             AllowResize = false;
             AutoScaleMode = AutoScaleMode.None;
             BackgroundColor = Color.FromArgb(30, 30, 30);
             ClientSize = new Size(533, 381);
+            Controls.Add(expTextBox);
+            Controls.Add(uiLabel1);
             Controls.Add(creditsLabel);
             Controls.Add(metroSetButton2);
             Controls.Add(uiTabControl1);
@@ -562,5 +608,7 @@
         private Sunny.UI.UIDataGridView dataGridBlues;
         private MetroSet_UI.Controls.MetroSetButton metroSetButton2;
         private MetroSet_UI.Controls.MetroSetLabel creditsLabel;
+        private Sunny.UI.UILabel uiLabel1;
+        private MetroSet_UI.Controls.MetroSetTextBox expTextBox;
     }
 }
